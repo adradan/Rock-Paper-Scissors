@@ -2,36 +2,27 @@ import re
 
 userCont = True
 
-#Searches string for the available choices and returns numbers based on choice
+#Using arrays are easier/more compact than using 3 if/else statements
 def whichChoice(x):
-#Searchs for responses
-    answPaperI = re.compile(r'{}'.format('p'), flags=re.IGNORECASE).search(x)
-    answPaper = re.compile(r'{}'.format('paper'), flags=re.IGNORECASE).search(x)
+    rePaper = re.compile(r'p|paper', flags=re.IGNORECASE)
+    reScissors = re.compile(r's|scissors', flags=re.IGNORECASE)
+    reRock = re.compile(r'r|scissors', flags=re.IGNORECASE)
 
-    answRockI = re.compile(r'{}'.format('r'), flags=re.IGNORECASE).search(x)
-    answRock = re.compile(r'{}'.format('rock'), flags=re.IGNORECASE).search(x)
+    reChoices = [rePaper, reScissors, reRock]
 
-    answScissorsI = re.compile(r'{}'.format('s'), flags=re.IGNORECASE).search(x)
-    answScissors = re.compile(r'{}'.format('scissors'), flags=re.IGNORECASE).search(x)
-
-#Returns number based on choice
-    if answPaper or answPaperI:
-        return 2
-    elif answScissors or answScissorsI:
-        return 3
-    elif answRock or answRockI:
-        return 1
-    else:
-        print("You did not choose a letter or spell out the word, please try again.\n")
-
+    for search in reChoices:
+        searchChoice = search.search(x)
+        if searchChoice:
+            return(searchChoice.group(0))
+            break
 
 #Gives computer's response
 def compAns(x):
-    if x == 1:
+    if x == 'r':
         print("Computer chose Paper")
-    elif x == 2:
+    elif x == 'p':
         print("Computer chose Scissors")
-    elif x == 3:
+    elif x == 's':
         print("Computer chose Rock")
 
 
@@ -50,7 +41,7 @@ while userCont == True:
     choice = input()
 
 #whatChoice is set by whichChoice function
-    whatChoice = whichChoice(choice.strip())
+    whatChoice = whichChoice(choice.strip().lower())
 
 #Gives computer's answer
     compAns(whatChoice)
