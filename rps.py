@@ -63,9 +63,6 @@ while userCont == True:
 #Initializing variables used in order of appearance
     choice = ""
     whatChoice = 0
-    answ = 0
-    againLoop = 1
-    again = ""
 
 #Asks for user's choice
     print( "Choose Rock, Paper, or Scissors (R, P, S, or spell it out)" )
