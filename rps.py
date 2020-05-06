@@ -3,7 +3,7 @@ import re
 userCont = True
 againLoop = 1
 
-
+#Bad Inputs
 def badInput():
     print("Please only type in the given choices.\n")
 
@@ -39,7 +39,7 @@ def compAns(x):
     elif x == 's':
         print("Computer chose Rock")
 
-
+#Checks if they still want to play
 def askAgain():
     global againLoop
 
