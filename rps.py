@@ -1,20 +1,34 @@
 import re
 
 userCont = True
+againLoop = 1
+
+
+def badInput():
+    print("Please only type in the given choices.\n")
+
 
 #Using arrays are easier/more compact than using 3 if/else statements
 def whichChoice(x):
-    rePaper = re.compile(r'p|paper', flags=re.IGNORECASE)
-    reScissors = re.compile(r's|scissors', flags=re.IGNORECASE)
-    reRock = re.compile(r'r|scissors', flags=re.IGNORECASE)
+    reChoices = [
+        'r',
+        'p',
+        's',
+    ]
 
-    reChoices = [rePaper, reScissors, reRock]
+    returnChoice = {
+        'r': reChoices[0],
+        'p': reChoices[1],
+        's': reChoices[2]
+    }
 
-    for search in reChoices:
-        searchChoice = search.search(x)
-        if searchChoice:
-            return(searchChoice.group(0))
-            break
+    check = x.startswith(tuple(reChoices))
+
+    if check:
+        return returnChoice[x[0]]
+    else:
+        badInput()
+
 
 #Gives computer's response
 def compAns(x):
@@ -24,6 +38,23 @@ def compAns(x):
         print("Computer chose Scissors")
     elif x == 's':
         print("Computer chose Rock")
+
+
+def askAgain():
+    global againLoop
+
+    while againLoop == 1:
+        again = input("Try again? y/n or spell it out\n")
+        if again.strip().lower().startswith('y'):
+            againLoop = 0
+            return True
+        elif again.strip().lower().startswith('n'):
+            againLoop = 0
+            return False
+        else:
+            badInput()
+    else:
+        print("Goodbye.")
 
 
 #Creates a loop so user can replay as much times as they want
@@ -46,22 +77,12 @@ while userCont == True:
 #Gives computer's answer
     compAns(whatChoice)
 
-#Allows user to try again or quit
-    while againLoop == 1:
-        print("Again? Yes/No")
-        again = input()
-        if "yes" in again:
-            print()
-            userCont = True
-            againLoop = 0
-        elif "no" in again:
-            print()
-            userCont = False
-            againLoop = 0
-        else:
-            print()
-            print("I don't understand, please say yes or no")    
+    replay = askAgain()
+    if replay:
+        userCont = True
+        print()
+    else:
+        userCont = False
 else:
-#Tells user goodbye then quits program
     print("Goodbye.")
 
