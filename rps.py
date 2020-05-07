@@ -3,17 +3,37 @@ import re
 userCont = True
 againLoop = 1
 
+
+#Checks that input is the length of the choices given
+def checkLength(x):
+    length = len(x)
+
+    if length == 1:
+        return True
+    elif length == 4:
+        return True
+    elif length == 5:
+        return True
+    elif length == 8:
+        return True
+    else:
+        return False
+
+
 #Bad Inputs
 def badInput():
     print("Please only type in the given choices.\n")
 
 
-#Using arrays are easier/more compact than using 3 if/else statements
+#Using arrays are easier/more compact than using if/else statements
 def whichChoice(x):
     reChoices = [
         'r',
+        'rock',
         'p',
+        'paper',
         's',
+        'scissors'
     ]
 
     returnChoice = {
@@ -22,10 +42,10 @@ def whichChoice(x):
         's': reChoices[2]
     }
 
-    check = x.startswith(tuple(reChoices))
-
-    if check:
-        return returnChoice[x[0]]
+    for check in reChoices:
+        if x == check:
+            return returnChoice[x[0]]
+            break
     else:
         badInput()
 
@@ -68,8 +88,15 @@ while userCont == True:
     print( "Choose Rock, Paper, or Scissors (R, P, S, or spell it out)" )
     choice = input()
 
+    #Check string length
+    choiceLength = checkLength(choice.strip().lower())
+    if choiceLength:
+        whatChoice = whichChoice(choice.strip().lower())
+    else:
+        badInput()
+
 #whatChoice is set by whichChoice function
-    whatChoice = whichChoice(choice.strip().lower())
+    
 
 #Gives computer's answer
     compAns(whatChoice)
@@ -78,6 +105,7 @@ while userCont == True:
     if replay:
         userCont = True
         print()
+        againLoop = 1
     else:
         userCont = False
 else:
