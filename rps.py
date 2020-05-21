@@ -25,26 +25,21 @@ def badInput():
     print("Please only type in the given choices.\n")
 
 
-#Using arrays are easier/more compact than using if/else statements
 def whichChoice(x):
-    reChoices = [
-        'r',
-        'rock',
-        'p',
-        'paper',
-        's',
-        'scissors'
+    reRock = re.compile(r'\brock\b|\br\b', re.IGNORECASE)
+    rePaper = re.compile(r'\bpaper\b|\bp\b', re.IGNORECASE)
+    reScissors = re.compile(r'\bscissors\b|\bs\b', re.IGNORECASE)
+
+    reItems = [
+        reRock,
+        rePaper,
+        reScissors
     ]
 
-    returnChoice = {
-        'r': reChoices[0],
-        'p': reChoices[1],
-        's': reChoices[2]
-    }
-
-    for check in reChoices:
-        if x == check:
-            return returnChoice[x[0]]
+    for search in reItems:
+        reSearch = re.search(search, x)
+        if reSearch is not None:
+            return reSearch.group()[0]
             break
     else:
         badInput()
